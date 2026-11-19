@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kaptı Kaçtı · Ücretsiz indir</title>
+<meta name="description" content="Kaptı Kaçtı: arkadaşını soy, terliği fırlat! App Store ve Google Play'de ücretsiz.">
+<meta property="og:title" content="Kaptı Kaçtı · Ücretsiz indir">
+<meta property="og:description" content="Absürt yaratıklar topla, arkadaşının yuvasını soy, hırsızı terlikle kovala!">
+<meta property="og:image" content="https://ufukmurtazs.github.io/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../img/icon.png">
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; font: 17px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+         color: #fff; text-align: center; background: linear-gradient(160deg, #9B7BFF, #5B8DFF 55%, #6FD3FF); }
+  main { padding: 28px 18px; }
+  img { width: 96px; height: 96px; border-radius: 24px; box-shadow: 0 12px 26px rgba(42,34,80,.35); }
+  h1 { margin: 14px 0 4px; font-size: 32px; }
+  p { margin: 0 0 20px; opacity: .95; }
+  a { display: block; margin: 10px auto; max-width: 260px; padding: 14px 18px; border-radius: 16px; background: #fff; color: #2A2250;
+      font-weight: 800; text-decoration: none; box-shadow: 0 8px 0 rgba(42,34,80,.25); }
+</style>
+</head>
+<body>
+<main>
+  <img src="../img/icon.png" alt="Kaptı Kaçtı">
+  <h1>Kaptı Kaçtı</h1>
+  <p id="msg">Mağazaya yönlendiriliyorsun…</p>
+  <a id="ios" href="https://apps.apple.com/tr/app/id6818613997">App Store'dan indir</a>
+  <a id="android" href="https://play.google.com/store/apps/details?id=com.ufukmurtaza.snatchies">Google Play'den al</a>
+</main>
+<script>
+  // Smart link: ufukmurtazs.github.io/indir?k=<source>  (k = instagram, tiktok, story, reklam...)
+  // Apple campaign token: App Store Connect → App Analytics → Acquisition → Campaigns → "Generate link"
+  // shows pt=XXXXXX in the generated URL. Paste only that number here; ct (campaign) is filled from ?k=.
+  var APPLE_PT = "";
+  var q = new URLSearchParams(location.search);
+  var src = (q.get("k") || "link").replace(/[^a-z0-9_-]/gi, "").slice(0, 40) || "link";
+  var force = q.get("p");
+  var ua = navigator.userAgent || "";
+  var isIos = force === "ios" || (!force && (/iPhone|iPad|iPod/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)));
+  var isAndroid = force === "android" || (!force && /Android/i.test(ua));
+
+  var appStore = "https://apps.apple.com/tr/app/id6818613997" + (APPLE_PT ? "?pt=" + APPLE_PT + "&ct=" + src + "&mt=8" : "");
+  var referrer = encodeURIComponent("utm_source=" + src + "&utm_medium=smartlink");
+  var playHttps = "https://play.google.com/store/apps/details?id=com.ufukmurtaza.snatchies&referrer=" + referrer;
+  var playApp = "market://details?id=com.ufukmurtaza.snatchies&referrer=" + referrer;
+
+  document.getElementById("ios").href = appStore;
+  document.getElementById("android").href = playHttps;
+
+  if (isIos) {
+    location.replace(appStore);
+  } else if (isAndroid) {
+    // Open the Play Store app directly (works inside Instagram/TikTok browsers); fall back to the web page.
+    var t = setTimeout(function () { location.replace(playHttps); }, 1200);
+    window.addEventListener("pagehide", function () { clearTimeout(t); });
+    location.href = playApp;
+  } else {
+    document.getElementById("msg").textContent = "Telefonundan aç ya da mağazanı seç:";
+  }
+</script>
+</body>
+</html>
